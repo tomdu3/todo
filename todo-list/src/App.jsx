@@ -50,6 +50,7 @@ export default function App() {
       </form>
       <h1 clasName="header">Todo List</h1>
       <ul className="list">
+        {todos.length === 0 && <div className="empty-list">No Items</div>}
         {todos.map(todo => {
           return (
             // key is required when returning multiple elements
