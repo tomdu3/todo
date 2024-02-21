@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NewTodoForm } from './components/NewTodoForm'
 import { TodoList } from './components/TodoList'
 import './styles.css'
 
 export default function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(() => {
+
+    const localValue = localStorage.getItem('ITEMS')
+    if (localValue == null) return []
+
+    return JSON.parse(localValue)
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('ITEMS', JSON.stringify(todos));
+    } catch (error) {
+      console.error('Failed to save todos:', error);
+    }
+  }, [todos]);
 
   function addTodo(title) {
 
